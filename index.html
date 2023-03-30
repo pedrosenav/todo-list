@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Todo List</title>
+		<link rel="stylesheet" href="style.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
+		<script src="script.js" defer></script>
+	</head>
+	<body>
+		<main class="todo-app">
+			<h1 class="todo-app__title">
+				<i class="fa-solid fa-paperclip"></i>
+				Todo List
+			</h1>
+
+			<section class="add-task">
+				<input
+					type="text"
+					class="add-task__text-input"
+					placeholder="Add your new task"
+					autofocus
+				/>
+				<button class="add-task__button">
+					<i class="fa-solid fa-plus"></i>
+				</button>
+			</section>
+
+			<section class="task-functions">
+				<i
+					class="task-functions__button check-all fa-solid fa-circle-check"
+					data-hover="Check all tasks"
+				></i>
+				<i
+					class="task-functions__button clear-all fa-solid fa-trash-can"
+					data-hover="Clear all tasks"
+				></i>
+			</section>
+			<ul class="task-list"></ul>
+
+			<section class="task-info">
+				<div class="task-info__checked-bar">
+					<span class="task-done-number">0 of</span>
+					<span class="task-total-number">0 done</span>
+				</div>
+				<button class="task-info__remove-checked-button">Clear checked</button>
+			</section>
+		</main>
+	</body>
+</html>
