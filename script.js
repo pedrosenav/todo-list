@@ -7,48 +7,54 @@ const checkAllTasksButton = document.querySelector(
 const removeAllTasksButton = document.querySelector(
 	'.task-functions__button.clear-all'
 )
-
 const removeCheckedButton = document.querySelector(
 	'.task-info__remove-checked-button'
 )
 
 const isInputEmpty = (textInput) => {
-	if (textInput.trim() == '') {
-		const title = document.querySelector('.todo-app__title')
+	if (!textInput.trim() == '') return false
 
-		title.classList.add('error--text')
-		taskAddButton.classList.add('error--button')
+	const title = document.querySelector('.todo-app__title')
 
-		setTimeout(() => {
-			title.classList.remove('error--text')
-			taskAddButton.classList.remove('error--button')
-		}, 1000)
+	title.classList.add('error--text')
+	taskAddButton.classList.add('error--button')
 
-		return true
-	}
-	return false
+	setTimeout(() => {
+		title.classList.remove('error--text')
+		taskAddButton.classList.remove('error--button')
+	}, 1000)
+
+	return true
 }
 
-const refreshStatusBar = () => {
-	const percentage = (refreshCheckedNumber() * 100) / refreshTasksNumber()
+const updateStatusBar = () => {
+	updateCheckedNumber()
+	updateTasksNumber()
+	const percentage = (updateCheckedNumber() * 100) / updateTasksNumber()
 	document
 		.querySelector('.task-info__checked-bar')
 		.style.setProperty('--progress-background', percentage + '%')
 }
 
-const refreshTasksNumber = () => {
-	document.querySelector('.task-total-number').textContent =
-		document.querySelectorAll('.task').length + ' done'
+const updateTasksNumber = () => {
+	const totalTasks = document.querySelectorAll('.task').length
+	document.querySelector(
+		'.task-total-number'
+	).textContent = `${totalTasks} done `
 
-	return document.querySelectorAll('.task').length
+	return totalTasks
 }
 
-const refreshCheckedNumber = () => {
-	let totalChecked = 0
-	document.querySelectorAll('.task__checkbox').forEach((checkbox) => {
-		if (checkbox.checked) totalChecked++
-	})
-	document.querySelector('.task-done-number').textContent = totalChecked + ' of '
+const updateCheckedNumber = () => {
+	const totalChecked = Object.values(
+		document.querySelectorAll('.task__checkbox')
+	)
+		.map((checkbox) => checkbox.checked)
+		.filter((check) => check).length
+
+	document.querySelector(
+		'.task-done-number'
+	).textContent = `${totalChecked} of `
 	return totalChecked
 }
 
@@ -76,9 +82,7 @@ const editTask = (event) => {
 const removeAllTasks = () => {
 	document.querySelectorAll('.task').forEach((task) => task.remove())
 
-	refreshStatusBar()
-	refreshTasksNumber()
-	refreshCheckedNumber()
+	updateStatusBar()
 }
 
 const removeTask = (event) => {
@@ -86,20 +90,17 @@ const removeTask = (event) => {
 		if (task.contains(event.target)) task.remove()
 	})
 
-	refreshStatusBar()
-	refreshTasksNumber()
-	refreshCheckedNumber()
+	updateStatusBar()
 }
 
 const checkAllTasks = () => {
 	document.querySelectorAll('.task').forEach((task) => {
 		const checkbox = task.querySelector('.task__checkbox')
 
-		checkbox.checked = checkbox.checked == true ? false : true
+		checkbox.checked = !checkbox.checked
 	})
 
-	refreshStatusBar()
-	refreshCheckedNumber()
+	updateStatusBar()
 }
 
 const removeChecked = () => {
@@ -107,9 +108,7 @@ const removeChecked = () => {
 		if (task.querySelector('.task__checkbox').checked) task.remove()
 	})
 
-	refreshStatusBar()
-	refreshTasksNumber()
-	refreshCheckedNumber()
+	updateStatusBar()
 }
 
 const addTask = (name) => {
@@ -124,10 +123,9 @@ const addTask = (name) => {
 
 	// Checkbox
 	const taskCheckbox = document.createElement('input')
-	taskCheckbox.setAttribute('type', 'checkbox')
 	taskCheckbox.classList.add('task__checkbox')
-	taskCheckbox.onclick = refreshCheckedNumber
-	taskCheckbox.onclick = refreshStatusBar
+	taskCheckbox.setAttribute('type', 'checkbox')
+	taskCheckbox.onclick = updateStatusBar
 
 	// Name
 	const taskName = document.createElement('p')
@@ -147,7 +145,7 @@ const addTask = (name) => {
 	editButton.appendChild(editIcon)
 
 	// Add edit function
-	editIcon.addEventListener('click', editTask)
+	editIcon.onclick = editTask
 
 	// Remove button
 	const removeButton = document.createElement('button')
@@ -158,15 +156,14 @@ const addTask = (name) => {
 	removeButton.appendChild(removeIcon)
 
 	// Remove task function
-	removeIcon.addEventListener('click', removeTask)
+	removeIcon.onclick = removeTask
 
 	task.append(taskCheckbox, taskName, buttonsContainer)
 	buttonsContainer.append(editButton, removeButton)
 
 	taskTextInput.value = ''
 	taskTextInput.focus()
-	refreshTasksNumber()
-	refreshCheckedNumber()
+	updateStatusBar()
 }
 
 // Event listeners
@@ -174,8 +171,7 @@ taskTextInput.addEventListener('keydown', (event) => {
 	if (event.key == 'Enter') addTask(taskTextInput.value)
 })
 
-taskAddButton.addEventListener('click', () => addTask(taskTextInput.value))
-
+taskAddButton.onclick = () => addTask(taskTextInput.value)
 removeCheckedButton.onclick = removeChecked
 removeAllTasksButton.onclick = removeAllTasks
 checkAllTasksButton.onclick = checkAllTasks

@@ -45,6 +45,8 @@ button {
 	transform: rotate(45deg);
 }
 
+/* TODO-APP >> TODO-APP >> TODO-APP >> TODO-APP >> TODO-APP >> TODO-APP */
+
 .todo-app__title,
 .add-task__button {
 	transition: var(--smooth-transition);
@@ -73,6 +75,8 @@ button {
 
 	user-select: none;
 }
+
+/* ADD-TASK AREA >> ADD-TASK AREA >> ADD-TASK AREA >> ADD-TASK AREA */
 
 .add-task {
 	min-width: 100%;
@@ -126,25 +130,7 @@ button {
 	cursor: pointer;
 }
 
-.task-functions {
-	min-width: 100%;
-	padding: 0.75rem;
-	display: flex;
-	justify-content: space-between;
-}
-
-.task-functions__button {
-	color: var(--clr-300);
-	cursor: pointer;
-}
-
-.task-functions__button.check-all:hover {
-	color: var(--clr-500);
-}
-
-.task-functions__button.clear-all:hover {
-	color: var(--clr-red);
-}
+/* TASK-LIST >> TASK-LIST >> TASK-LIST >> TASK-LIST >> TASK-LIST */
 
 .task-list {
 	max-height: 35vh;
@@ -159,7 +145,7 @@ button {
 	display: none;
 }
 
-/* SINGLE TASK >> SINGLE TASK >> SINGLE TASK */
+/* SINGLE TASK >> SINGLE TASK >> SINGLE TASK >> SINGLE TASK */
 
 .task {
 	padding: 0.5rem 0.75rem;
@@ -189,7 +175,7 @@ button {
 	overflow-wrap: break-word;
 	text-overflow: clip;
 
-	max-width: 20rem;
+	max-width: 15rem;
 	padding: 0.25rem 0.5rem;
 	flex: 1;
 }
@@ -221,7 +207,29 @@ button {
 	color: var(--clr-red);
 }
 
-/* TASK-INFO (BOTTOM) >> TASK-INFO (BOTTOM) >> TASK-INFO (BOTTOM) */
+/* TASK-FUNCTIONS >> TASK-FUNCTIONS >> TASK-FUNCTIONS >> TASK-FUNCTIONS*/
+
+.task-functions {
+	min-width: 100%;
+	padding: 0.75rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.task-functions__button {
+	color: var(--clr-300);
+	cursor: pointer;
+}
+
+.task-functions__button.check-all:hover {
+	color: var(--clr-500);
+}
+
+.task-functions__button.clear-all:hover {
+	color: var(--clr-red);
+}
+
+/* TASK-INFO >> TASK-INFO >> TASK-INFO >> TASK-INFO >> TASK-INFO */
 
 .task-info {
 	min-width: 100%;
