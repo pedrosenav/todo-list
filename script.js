@@ -11,6 +11,16 @@ const removeCheckedButton = document.querySelector(
 	'.task-info__remove-checked-button'
 )
 
+const currentTime = () => {
+	const date = new Date()
+	const h = date.getHours() < 10 ? '0' + date.getHours() : date.getHours()
+	const min =
+		date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
+	const s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
+
+	return `Added at ${h}:${min}:${s}`
+}
+
 const isInputEmpty = (textInput) => {
 	if (!textInput.trim() == '') return false
 
@@ -70,12 +80,17 @@ const editTask = (event) => {
 		name.setAttribute('contenteditable', 'true')
 		name.focus()
 
-		name.addEventListener('keydown', (event) => {
+		name.onblur = () => {
+			name.removeAttribute('contenteditable')
+			editButton.classList.remove('active')
+		}
+
+		name.onkeydown = (event) => {
 			if (event.key == 'Enter' || event.key == 'Escape') {
 				name.removeAttribute('contenteditable')
 				editButton.classList.remove('active')
 			}
-		})
+		}
 	})
 }
 
@@ -132,6 +147,12 @@ const addTask = (name) => {
 	taskName.classList.add('task__name')
 	taskName.textContent = name.trim()
 
+	// Abbr
+	const taskAbbr = document.createElement('abbr')
+	taskAbbr.classList.add('task__abbr')
+	taskAbbr.setAttribute('title', currentTime())
+	taskAbbr.appendChild(taskName)
+
 	// Buttons
 	const buttonsContainer = document.createElement('div')
 	buttonsContainer.classList.add('task-list__button-container')
@@ -158,7 +179,7 @@ const addTask = (name) => {
 	// Remove task function
 	removeIcon.onclick = removeTask
 
-	task.append(taskCheckbox, taskName, buttonsContainer)
+	task.append(taskCheckbox, taskAbbr, buttonsContainer)
 	buttonsContainer.append(editButton, removeButton)
 
 	taskTextInput.value = ''
